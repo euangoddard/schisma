@@ -4,6 +4,7 @@
 
 var WelcomeController = function ($scope) {
     $scope.app_name = 'Schisma';
+    _gaq.push(['_trackPageview', '/welcome']);
 };
 
 var CreationController = function ($scope, $location, Schism) {
@@ -15,7 +16,7 @@ var CreationController = function ($scope, $location, Schism) {
     };
 };
 
-var SchismController = function ($scope, $log, $routeParams, Schism) {
+var SchismController = function ($scope, $location, $routeParams, Schism) {
     
     // Read the data from the backend
     $scope.$parent.is_loading = true;
@@ -68,6 +69,7 @@ var SchismController = function ($scope, $log, $routeParams, Schism) {
         });
     };
     
+    _gaq.push(['_trackPageview', $location.path()]);
 };
 
 var calculate_totals_per_person = function (payments) {
