@@ -40,6 +40,7 @@ var SchismController = function ($scope, $location, $routeParams, Schism) {
     // Public functions exposed to the view
     
     $scope.add_payment = function () {
+        $scope.new_payment.name = trim_string($scope.new_payment.name);
         $scope.schism.payments.push($scope.new_payment);
         $scope.new_payment = {};
         group_payments_by_name($scope.schism.payments);
@@ -178,4 +179,9 @@ var compare_objects_by_name_key = function (a, b) {
 
 var compare_objects_by_amount_key = function (a, b) {
     return b.amount - a.amount;
+};
+
+
+var trim_string = function (string) {
+    return string.replace(/^\s+/, '').replace(/\s+$/, '');
 };
