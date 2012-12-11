@@ -33,7 +33,7 @@ var SchismController = function ($scope, $location, $routeParams, Schism) {
     });
     
     // Initial state for the scope
-    $scope.CURRENCIES = ['$', '\u00A3'];
+    $scope.CURRENCIES = ['$', '\u00A3', '\u20AC', '\u00A5'];
     $scope.is_editing_schism = false;
     $scope.new_payment = {};
     
