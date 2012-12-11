@@ -1,0 +1,191 @@
+<sction ng-controller="SchismController">
+  <div class="page-header">
+    <p class="pull-right muted" ng-show="is_saving">Saving</p>
+    <h1 ng-show="!is_editing_schism">
+      {{ schism.name }}
+      <small>Currency: {{ schism.currency }}</small>
+      <button class="btn" ng-click="is_editing_schism=true">
+        <i class="icon-pencil"></i>
+      </button>
+    </h1>
+    <form
+      ng-submit="is_editing_schism=false"
+      ng-show="is_editing_schism"
+      class="form-inline"
+      name="schism_form"
+    >
+      <input
+        type="text"
+        ng-model="schism.name"
+        placeholder="Schism name"
+        required
+        class="input-xlarge"
+      >
+      <select ng-model="schism.currency" required class="input-mini">
+        <option
+          ng-repeat="currency in CURRENCIES"
+          value="{{ currency }}"
+          ng-selected="currency == schism.currency"
+        >
+          {{ currency }}
+        </option>
+      </select>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        ng-disabled="schism_form.$invalid"
+        ng-click="save_schism()"
+      >
+        Save
+      </button>
+    </form> 
+  </div>
+  
+  <div class="row">
+    <div class="span8">
+      <div class="alert alert-info" ng-hide="schism.payments.length">
+        <strong>Get started:</strong> Use the form below to capture payment details.
+      </div>
+      <table class="table table-striped table-bordered" ng-show="schism.payments.length">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>What</th>
+            <th>Amount</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="payment in schism.payments">
+            <td>{{ payment.name }}</td>
+            <td>{{ payment.what }}</td>
+            <td>{{ payment.amount | currency : schism.currency }}</td>
+            <td>
+              <button class="btn btn-mini btn-danger" ng-click="remove_payment($index)">
+                <i class="icon-white icon-remove"></i>
+              </button>
+          </tr>
+        </tbody>
+      </table>
+      <form
+        class="form-horizontal"
+        name="add_payment_form"
+        ng-submit="add_payment()"
+      >
+        <fieldset>
+          <legend>Add a new payment</legend>
+          <div class="control-group">
+            <label class="control-label" for="name">Name</label>
+            <div class="controls">
+              <input
+                type="text"
+                id="payment_name"
+                placeholder="who you are"
+                required
+                ng-model="new_payment.name"
+              >
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="payment_what">What</label>
+            <div class="controls">
+              <input
+                type="text"
+                id="payment_what"
+                placeholder="what you paid for"
+                required
+                ng-model="new_payment.what"
+              >
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="payment_amount">Amount</label>
+            <div class="controls">
+              <div class="input-prepend">
+                <span class="add-on" ng-bind="schism.currency"></span>
+                <input
+                  type="number"
+                  id="payment_amount"
+                  placeholder="how much you paid"
+                  class="input-small"
+                  min="0.00"
+                  required
+                  ng-model="new_payment.amount"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <button 
+                type="submit"
+                class="btn btn-primary"
+                ng-disabled="add_payment_form.$invalid"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <hr>
+      <h6 class="muted">
+        <span class="label">Hint</span> If someone hasn't contributed
+        anything, put them down with a payment of 0
+      </h6>
+    </div>
+    <div class="span4">
+      <div class="well well-small">
+        <h4>Total spend per person</h4>
+        <p class="muted" ng-hide="names_and_amounts.length">
+          Totals will appear here. Go add some payments!
+        </p>
+        <table class="table" ng-show="names_and_amounts.length">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Total</th>
+              <th>Owed</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="name_and_amount in names_and_amounts">
+              <td>{{ name_and_amount.name }}</td>
+              <td>{{ name_and_amount.total_payment | currency : schism.currency }}</td>
+              <td>{{ name_and_amount.difference_from_average | currency : schism.currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="well well-small">
+        <h4>Reimbursement strategy</h4>
+        <input
+          type="text"
+          ng-model="search"
+          class="search-query"
+          placeholder="Search"
+          ng-show="reimburments.length"
+        >
+        <table class="table" ng-show="reimburments.length">
+          <thead>
+            <tr>
+              <th>From</th>
+              <th>To</th>
+              <th>Payment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="reimburment in reimburments | filter:search">
+              <td>{{ reimburment.debtor }}</td>
+              <td>{{ reimburment.creditor }}</td>
+              <td>{{ reimburment.amount | currency : schism.currency }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="muted" ng-hide="reimburments.length">
+          Add more than 1 payee to see the strategy.
+        </p>
+      </div>
+    </div>
+  </div>
+</sction>

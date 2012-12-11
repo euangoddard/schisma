@@ -1,0 +1,29 @@
+<h1>Create a schism</h1>
+
+<form class="form-horizontal" name="creation_form" ng-controller="CreationController">
+  <fieldset>
+    <legend>Give it a name</legend>
+    <div class="control-group">
+      <label class="control-label" for="name">Name of schism</label>
+      <div class="controls">
+        <input type="text" name="schism_name" required id="name" placeholder="the big bill">
+        <span class="error" ng-show="creation_form.schism_name.$error.required">You must enter a name</span>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Add some people</legend>
+    <div class="control-group">
+      <label class="control-label" for="person">Password</label>
+      <div class="controls">
+        <input type="password" id="person" placeholder="name">
+      </div>
+    </div>
+  </fieldset>
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  
+</form>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" ng-app="schisma">
+  <head>
+    <meta charset="utf-8">
+    <title>Schisma</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/app.css"/>
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="overlay" ng-show="is_loading"></div>
+    <div id="loading" ng-show="is_loading">
+      <div class="container">
+        <h1 class="span6 offset3">Loading...</h1>
+        <div class="progress progress-striped active span6 offset3">
+          <div class="bar" style="width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#/welcome">Schisma</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div ng-view></div>
+    </div>
+
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-resource.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/backend.js"></script>
+  </body>
+</html>
