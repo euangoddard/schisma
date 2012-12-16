@@ -1,4 +1,4 @@
-<sction ng-controller="SchismController">
+<section ng-controller="SchismController">
   <div class="page-header">
     <p class="pull-right muted" ng-show="is_saving">Saving</p>
     <h1 ng-show="!is_editing_schism">
@@ -43,6 +43,7 @@
   
   <div class="row">
     <div class="span8">
+      
       <div class="alert alert-info" ng-hide="schism.payments.length">
         <strong>Get started:</strong> Use the form below to capture payment details.
       </div>
@@ -58,7 +59,7 @@
         <tbody>
           <tr ng-repeat="payment in schism.payments">
             <td>{{ payment.name }}</td>
-            <td>{{ payment.what }}</td>
+            <td>{{ payment.what | default : '(nothing)' }}</td>
             <td>{{ payment.amount | currency : schism.currency }}</td>
             <td>
               <button class="btn btn-mini btn-danger" ng-click="remove_payment($index)">
@@ -75,7 +76,7 @@
         <fieldset>
           <legend>Add a new payment</legend>
           <div class="control-group">
-            <label class="control-label" for="name">Name</label>
+            <label class="control-label" for="payment_name">Name</label>
             <div class="controls">
               <input
                 type="text"
@@ -129,11 +130,38 @@
           </div>
         </fieldset>
       </form>
-      <hr>
-      <h6 class="muted">
-        <span class="label">Hint</span> If someone hasn't contributed
-        anything, put them down with a payment of 0
-      </h6>
+      <form
+        class="form-horizontal"
+        name="add_non_payee_form"
+        ng-submit="add_payment()"
+      >
+        <fieldset>
+          <legend>Add someone who won't contribute</legend>
+          <div class="control-group">
+            <label class="control-label" for="non_payee_name">Name</label>
+            <div class="controls">
+              <input
+                type="text"
+                id="non_payee_name"
+                placeholder="who you are"
+                required
+                ng-model="new_payment.name"
+              >
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="controls">
+              <button 
+                type="submit"
+                class="btn btn-primary"
+                ng-disabled="add_non_payee_form.$invalid"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
     </div>
     <div class="span4">
       <div class="well well-small">
@@ -189,4 +217,4 @@
       </div>
     </div>
   </div>
-</sction>
+</section>

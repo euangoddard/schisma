@@ -40,8 +40,11 @@ var SchismController = function ($scope, $location, $routeParams, Schism) {
     // Public functions exposed to the view
     
     $scope.add_payment = function () {
-        $scope.new_payment.name = trim_string($scope.new_payment.name);
-        $scope.schism.payments.push($scope.new_payment);
+        var payment = $scope.new_payment;
+        payment.name = trim_string(payment.name);
+        payment.what = trim_string(payment.what || '');
+        payment.amount = payment.amount || 0;
+        $scope.schism.payments.push(payment);
         $scope.new_payment = {};
         group_payments_by_name($scope.schism.payments);
         commit_changes_to_remote();
