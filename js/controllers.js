@@ -4,6 +4,7 @@
 
 var WelcomeController = function ($scope) {
     $scope.app_name = 'Schisma';
+    $scope.tag_line = 'Splitting the bill in a fair and fast manner';
     _gaq.push(['_trackPageview', '/welcome']);
 };
 

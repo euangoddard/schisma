@@ -1,6 +1,6 @@
-<div class="hero-unit">
+<div class="hero-unit hidden-phone">
   <h1>Welcome to {{app_name}}</h1>
-  <p>Splitting the bill in a fair and fast manner</p>
+  <p>{{ tag_line }}</p>
   <hr>
   <h4>Create a new schism</h4>
   <form
@@ -18,11 +18,36 @@
       />
       <button
         type="submit"
-        class="btn btn-primary"
+        class="btn btn-success"
         ng-disabled="creation_form.$invalid"
       >
-        Split the bill
+        Start
       </button>
     </div>
+  </form>
+</div>
+<div class="row visible-phone">
+  <h1>Welcome to {{app_name}}</h1>
+  <p class="lead">{{ tag_line }}
+  <form
+    class="form-inline well"
+    ng-controller="CreationController"
+    ng-submit="create_schism()"
+    name="mini_creation_form"
+    >
+      <h4>Create a new schism</h4>
+      <input
+        type="text"
+        ng-model="schism.name"
+        required
+        placeholder="name this schism"
+      />
+      <button
+        type="submit"
+        class="btn btn-success"
+        ng-disabled="mini_creation_form.$invalid"
+      >
+        Start
+      </button>
   </form>
 </div>
